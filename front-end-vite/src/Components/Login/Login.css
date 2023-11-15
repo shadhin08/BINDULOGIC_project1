@@ -1,0 +1,11 @@
+.login-input
+{
+    margin: 9vh;
+    padding: 0px 5vh;
+}
+.align-center
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
