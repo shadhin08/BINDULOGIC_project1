@@ -1,0 +1,20 @@
+.profile-post
+{
+    margin: 5vh 6vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+.rent-post-heading
+{
+    text-align: center;
+    font-weight: 700;
+}
+.create-new-rent-post
+{
+    margin: 5vh 6vh;
+    text-align: center;
+}
+.create-new-rent-post-input
+{
+    margin: 0vh 0vh 2vh 0vh;
+}
