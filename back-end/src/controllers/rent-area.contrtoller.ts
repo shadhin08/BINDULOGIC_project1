@@ -17,8 +17,8 @@ const addNewArea = async (req: Request, res: Response) => {
         .status(404)
         .send("Area maybe already exist or something is missing...!");
   } catch (error: any) {
-    res.status(400).send("Something went wrong...");
     logger.error(error.message);
+    res.status(400).send("Something went wrong...");
   }
 };
 const getAllArea = async (req: Request, res: Response) => {
@@ -27,8 +27,8 @@ const getAllArea = async (req: Request, res: Response) => {
     if (result) res.status(200).send(result);
     else res.status(404).send("Area not found...");
   } catch (error: any) {
-    res.status(400).send("Something went wrong...");
     logger.error(error.message);
+    res.status(400).send("Something went wrong...");
   }
 };
 

@@ -61,6 +61,20 @@ const getAllrentPost = async () => {
     return null;
   }
 };
+
+const getRentPostById = async (target: string) => {
+  try {
+    const result = await prisma.rentPost.findUnique({
+      where: {
+        id: target,
+      },
+    });
+    return result;
+  } catch (error: any) {
+    logger.error(error.message);
+    return null;
+  }
+};
 const deleteRentPostById = async (target: string) => {
   try {
     const result = await prisma.rentPost.delete({
@@ -78,6 +92,7 @@ const RentPostServices = {
   saveRentPost,
   findRentPostsByUsername,
   getAllrentPost,
+  getRentPostById,
   deleteRentPostById,
 };
 export default RentPostServices;

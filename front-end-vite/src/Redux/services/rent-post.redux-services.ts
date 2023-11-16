@@ -19,6 +19,12 @@ export const rentPostApi = createApi({
       providesTags: ['Posts'],
     }),
 
+    //for get rent post by id
+    findRentPostsById: builder.query<IRentPostInterface, string>({
+      query: (id) => `/rentpost/detail/get/${id}`,
+      providesTags: ['Posts'],
+    }),
+
     //for create a new rent post
     createRentPost: builder.mutation<IRentPostInterface, IRentPostInterface>({
       query: (rentPost) => ({
@@ -43,6 +49,7 @@ export const rentPostApi = createApi({
 export const {
   useGetAllRentPostsQuery,
   useGetRentPostsByUsernameQuery,
+  useFindRentPostsByIdQuery,
   useCreateRentPostMutation,
   useGetAllRentAreasQuery,
 } = rentPostApi;

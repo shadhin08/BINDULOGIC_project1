@@ -19,8 +19,8 @@ const createRentPost = async (req: Request, res: Response) => {
     if (result) res.status(200).send(result);
     else res.status(404).send("something is missing...!");
   } catch (error: any) {
-    res.status(400).send("Something went wrong...");
     logger.error(error.message);
+    res.status(400).send("Something went wrong...");
   }
 };
 const getRentPostsByUsername = async (req: Request, res: Response) => {
@@ -32,8 +32,8 @@ const getRentPostsByUsername = async (req: Request, res: Response) => {
     if (userWithRentPosts) res.status(200).send(userWithRentPosts);
     else res.status(404).send("User not found");
   } catch (error: any) {
-    res.status(400).send("Something went wrong...");
     logger.error(error.message);
+    res.status(400).send("Something went wrong...");
   }
 };
 
@@ -43,10 +43,24 @@ const getAllRentPost = async (req: Request, res: Response) => {
     if (allRentPost) res.status(200).send(allRentPost);
     else res.status(404).send("Rent post not found");
   } catch (error: any) {
-    res.status(400).send("Something went wrong...");
     logger.error(error.message);
+    res.status(400).send("Something went wrong...");
   }
 };
+
+const findRentPostById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const result = await RentPostServices.getRentPostById(id);
+
+    if (result) res.status(200).send(result);
+    else res.status(404).send("Rent post not found");
+  } catch (error: any) {
+    logger.error(error.message);
+    res.status(400).send("Something went wrong...");
+  }
+};
+
 const deletePostById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
@@ -55,14 +69,15 @@ const deletePostById = async (req: Request, res: Response) => {
     if (result) res.status(200).send("Rent post deleted");
     else res.status(404).send("Rent post not found");
   } catch (error: any) {
-    res.status(400).send("Something went wrong...");
     logger.error(error.message);
+    res.status(400).send("Something went wrong...");
   }
 };
 const RentPostController = {
   createRentPost,
   getRentPostsByUsername,
   getAllRentPost,
+  findRentPostById,
   deletePostById,
 };
 export default RentPostController;
