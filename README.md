@@ -1,7 +1,7 @@
 # BINDULOGIC_project1
 
 This is for the people who suffer for house rent.
-You can easily find your house rent from many rent posts
+You can easily find your house rent from many rent posts.
 
 # In Backend
 
