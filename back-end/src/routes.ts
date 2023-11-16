@@ -1,83 +1,46 @@
 import { Router } from "express";
 import AuthController from "./controllers/auth.controller";
-import RentAreaController from "./controllers/rent.area.contrtoller";
-import RentPostController from "./controllers/rent.post.controller";
+import RentAreaController from "./controllers/rent-area.contrtoller";
+import RentPostController from "./controllers/rent-post.controller";
 import UserController from "./controllers/user.controller";
-import { swaggerDocs } from "./swagger-docs";
-
-const x = swaggerDocs();
-console.log(x);
+import {
+  loginInputValidate,
+  rentPostInputvalidate,
+  signinInputValidate,
+} from "./middleware/zod-validation.middleware";
 
 const route = Router();
 
-//-------------------------------------------------------User schema----------------------------------------------------------
-/**
- * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - firstName
- *         - lastName
- *         - username
- *         - email
- *         - image
- *         - password
- *       properties:
- *         firstName:
- *           type: string
- *           description: The user's first name
- *         lastName:
- *           type: string
- *           description: The The user's last name
- *         username:
- *           type: string
- *           description: User username (username should be unique for everyone)
- *         email:
- *           type: string
- *           description: User email (email should be unique for everyone)
- *         image:
- *           type: string
- *           description: User profile picture
- *         password:
- *           type: string
- *           description: User password
- *       example:
- *         firstName: Jhon
- *         lastName: Doe
- *         username: jhondoe
- *         email: jhon@email.com
- *         image: image url
- *         password: xxxxxxx
- */
+//user
+route.get("/users/get/all", UserController.getAllUser);
+route.post(
+  "/user/post/register",
+  signinInputValidate,
+  UserController.createUser
+);
+route.get("/user/get/:username", UserController.getUserByUsername);
 
-/**
- * @swagger
- * tags:
- *   name: User
- *   description: The user manage API
- */
+//login
+route.post(
+  "/user/login",
+  loginInputValidate,
+  AuthController.userLoginWithUsername
+);
 
-//-------------------------------------------------------Swagger Docs----------------------------------------------------------
-/**
- * @swagger
- * /users/get/all:
- *   get:
- *     summary: Returns the list of all the user
- *     tags: [User]
- *     responses:
- *       200:
- *         description: The list of the user
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
+//area
+route.post("/area/post/register", RentAreaController.addNewArea);
+route.get("/area/get/all", RentAreaController.getAllArea);
 
-route.get("/users/get/all", UserController.getAllUser); //------------------------------------all users route
+//Rent Post
+route.post(
+  "/rentpost/post/register",
+  rentPostInputvalidate,
+  RentPostController.createRentPost
+);
+route.get("/rentposts/get/all", RentPostController.getAllRentPost);
+route.get("/rentpost/get/:username", RentPostController.getRentPostsByUsername);
+// route.delete("/rentpost/delete/:id", RentPostController.deletePostById);
+
 /**
  * @swagger
  * /user/post/register:
@@ -100,7 +63,6 @@ route.get("/users/get/all", UserController.getAllUser); //----------------------
  *       500:
  *         description: Some server error
  */
-route.post("/user/post/register", UserController.createUser); //------------------------------------user registration route
 
 /**
  * @swagger
@@ -125,7 +87,6 @@ route.post("/user/post/register", UserController.createUser); //----------------
  *       404:
  *         description: The user was not found
  */
-route.get("/user/get/:username", UserController.getUserByUsername); //------------------------------------find user by username route
 
 //\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
@@ -179,7 +140,6 @@ route.get("/user/get/:username", UserController.getUserByUsername); //----------
  *       500:
  *         description: Some server error
  */
-route.post("/user/login", AuthController.userLoginWithUsername); //------------------------------------user login route
 
 //\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
@@ -229,7 +189,6 @@ route.post("/user/login", AuthController.userLoginWithUsername); //-------------
  *         description: Some server error
  */
 
-route.post("/area/post/register", RentAreaController.addNewArea); //------------------------------------create a new location route
 /**
  * @swagger
  * /area/get/all:
@@ -246,7 +205,7 @@ route.post("/area/post/register", RentAreaController.addNewArea); //------------
  *               items:
  *                 $ref: '#/components/schemas/RentArea'
  */
-route.get("/area/get/all", RentAreaController.getAllArea); //------------------------------------get all location route
+
 //\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
 //-------------------------------------------------------Rent Post schema----------------------------------------------------------
@@ -331,7 +290,6 @@ route.get("/area/get/all", RentAreaController.getAllArea); //-------------------
  *       500:
  *         description: Some server error
  */
-route.post("/rentpost/post/register", RentPostController.createRentPost);
 
 /**
  * @swagger
@@ -349,7 +307,6 @@ route.post("/rentpost/post/register", RentPostController.createRentPost);
  *               items:
  *                 $ref: '#/components/schemas/RentPost'
  */
-route.get("/rentposts/get/all", RentPostController.getAllRentPost);
 
 /**
  * @swagger
@@ -374,7 +331,5 @@ route.get("/rentposts/get/all", RentPostController.getAllRentPost);
  *       404:
  *         description: The user was not found
  */
-route.get("/rentpost/get/:username", RentPostController.getRentPostsByUsername);
-// route.delete("/rentpost/delete/:id", RentPostController.deletePostById);
 
 export default route;

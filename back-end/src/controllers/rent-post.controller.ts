@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import RentPostServices from "../services/rent.post.services";
+import RentPostServices from "../services/rent-post.services";
 import logger from "../utls/logger";
 
 const createRentPost = async (req: Request, res: Response) => {
@@ -9,7 +9,6 @@ const createRentPost = async (req: Request, res: Response) => {
     //check area is valid or not
 
     //save post
-    // console.log(req.cookies);
     const user = req.cookies;
     // console.log(user)
 
