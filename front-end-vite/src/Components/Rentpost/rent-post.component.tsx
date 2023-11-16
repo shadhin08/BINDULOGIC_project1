@@ -39,38 +39,41 @@ export const RentPostComponent: React.FC<RentPostComponentProps> = (
   return (
     <div className="rent-post">
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-        <Image
-          src={property.image || property.imageUrl}
-          alt={property.imageAlt}
-        />
+        <Link to={`/rent-post/${props.post.id}`}>
+          <Image
+            src={property.image || property.imageUrl}
+            alt={property.imageAlt}
+          />
+        </Link>
 
         <Box p="6">
-          <Box display="flex" alignItems="baseline">
-            <Badge borderRadius="full" px="2" colorScheme="teal">
-              New
-            </Badge>
-            <Box
-              color="gray.500"
-              fontWeight="semibold"
-              letterSpacing="wide"
-              fontSize="xs"
-              textTransform="uppercase"
-              ml="2"
-            >
-              {property.beds} beds &bull; {property.baths} baths
+          <Link to={`/rent-post/${props.post.id}`}>
+            <Box display="flex" alignItems="baseline">
+              <Badge borderRadius="full" px="2" colorScheme="teal">
+                New
+              </Badge>
+              <Box
+                color="gray.500"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                fontSize="xs"
+                textTransform="uppercase"
+                ml="2"
+              >
+                {property.beds} beds &bull; {property.baths} baths
+              </Box>
             </Box>
-          </Box>
 
-          <Box
-            mt="1"
-            fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            noOfLines={1}
-          >
-            {property.title}
-          </Box>
-
+            <Box
+              mt="1"
+              fontWeight="semibold"
+              as="h4"
+              lineHeight="tight"
+              noOfLines={1}
+            >
+              {property.title}
+            </Box>
+          </Link>
           <Box>
             {property.formattedPrice}
             <Box as="span" color="gray.600" fontSize="sm">

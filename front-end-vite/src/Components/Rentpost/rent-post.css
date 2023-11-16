@@ -1,4 +1,14 @@
-.rent-post
-{
-    margin: 5px;
+.rent-post {
+  margin: 5px;
+}
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+.rent-post-details-texts {
+  margin: 20px;
+}
+.flex {
+  display: flex;
 }

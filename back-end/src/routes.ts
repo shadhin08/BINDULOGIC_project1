@@ -39,6 +39,7 @@ route.post(
 );
 route.get("/rentposts/get/all", RentPostController.getAllRentPost);
 route.get("/rentpost/get/:username", RentPostController.getRentPostsByUsername);
+route.get("/rentpost/detail/get/:id", RentPostController.findRentPostById);
 // route.delete("/rentpost/delete/:id", RentPostController.deletePostById);
 
 /**
