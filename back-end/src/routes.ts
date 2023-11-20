@@ -3,11 +3,12 @@ import AuthController from "./controllers/auth.controller";
 import RentAreaController from "./controllers/rent-area.contrtoller";
 import RentPostController from "./controllers/rent-post.controller";
 import UserController from "./controllers/user.controller";
+import { inputValidate } from "./middleware/zod-validation.middleware";
 import {
-  loginInputValidate,
-  rentPostInputvalidate,
-  signinInputValidate,
-} from "./middleware/zod-validation.middleware";
+  RentPostSchema,
+  UserCredentialSchema,
+  UserSchema,
+} from "./zod-interfaces/zod-interfaces";
 
 const route = Router();
 
@@ -15,7 +16,7 @@ const route = Router();
 route.get("/users/get/all", UserController.getAllUser);
 route.post(
   "/user/post/register",
-  signinInputValidate,
+  inputValidate(UserSchema),
   UserController.createUser
 );
 route.get("/user/get/:username", UserController.getUserByUsername);
@@ -23,7 +24,7 @@ route.get("/user/get/:username", UserController.getUserByUsername);
 //login
 route.post(
   "/user/login",
-  loginInputValidate,
+  inputValidate(UserCredentialSchema),
   AuthController.userLoginWithUsername
 );
 
@@ -34,7 +35,7 @@ route.get("/area/get/all", RentAreaController.getAllArea);
 //Rent Post
 route.post(
   "/rentpost/post/register",
-  rentPostInputvalidate,
+  inputValidate(RentPostSchema),
   RentPostController.createRentPost
 );
 route.get("/rentposts/get/all", RentPostController.getAllRentPost);
@@ -42,6 +43,70 @@ route.get("/rentpost/get/:username", RentPostController.getRentPostsByUsername);
 route.get("/rentpost/detail/get/:id", RentPostController.findRentPostById);
 // route.delete("/rentpost/delete/:id", RentPostController.deletePostById);
 
+//-------------------------------------------------------User schema----------------------------------------------------------
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - firstName
+ *         - lastName
+ *         - username
+ *         - email
+ *         - image
+ *         - password
+ *       properties:
+ *         firstName:
+ *           type: string
+ *           description: The user's first name
+ *         lastName:
+ *           type: string
+ *           description: The The user's last name
+ *         username:
+ *           type: string
+ *           description: User username (username should be unique for everyone)
+ *         email:
+ *           type: string
+ *           description: User email (email should be unique for everyone)
+ *         image:
+ *           type: string
+ *           description: User profile picture
+ *         password:
+ *           type: string
+ *           description: User password
+ *       example:
+ *         firstName: Jhon
+ *         lastName: Doe
+ *         username: jhondoe
+ *         email: jhon@email.com
+ *         image: image url
+ *         password: xxxxxxx
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: The user manage API
+ */
+//-------------------------------------------------------Swagger Docs----------------------------------------------------------
+/**
+ * @swagger
+ * /users/get/all:
+ *   get:
+ *     summary: Returns the list of all the user
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: The list of the user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
 /**
  * @swagger
  * /user/post/register:
@@ -64,7 +129,6 @@ route.get("/rentpost/detail/get/:id", RentPostController.findRentPostById);
  *       500:
  *         description: Some server error
  */
-
 /**
  * @swagger
  * /user/get/{username}:

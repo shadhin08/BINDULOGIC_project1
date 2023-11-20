@@ -1,12 +1,20 @@
-version: '3.4'
-
+version: "3"
 services:
-  backend:
-    image: backend
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - 5434:5434
+
     environment:
-      NODE_ENV: production
+      - POSTGRES_DB=testDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  adminer:
+    image: adminer
+    restart: always
     ports:
       - 8080:8080
